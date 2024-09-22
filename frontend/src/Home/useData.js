@@ -14,7 +14,7 @@ export const useData = () => {
     useEffect(() => {
         AJAX({method: 'get', url: VERIFY})
             .then(res => {
-                console.log(res.data)
+                console.log(res)
                 if (res.data.Status === 'Success') {
                     setAuth(true)
                     setName(res.data.name)

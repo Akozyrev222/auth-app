@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:3000/'
+export const BASE_URL = 'auth-app-virid-eight.vercel.app/'
 export const BASE_API = 'server/users/'
 
 export const REGISTER = 'register'

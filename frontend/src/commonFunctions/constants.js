@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:8082/'
+export const BASE_URL = 'http://localhost:3000/'
 export const BASE_API = 'api/users/'
 
 export const REGISTER = 'register'

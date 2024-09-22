@@ -10,7 +10,7 @@ export const useData = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        axios.get('http://localhost:8082/api/users/verify')
+        axios.get('http://localhost:3000/api/users/verify')
             .then(res => {
                 if (res.data.Status === 'Success') {
                     setAuth(true)

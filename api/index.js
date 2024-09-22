@@ -18,6 +18,6 @@ app.use(cookieParser());
 
 app.use('/', userRoute)
 
-app.listen(8082, () => {
+app.listen(3000, () => {
     console.log("Start")
 })

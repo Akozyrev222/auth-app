@@ -56,6 +56,7 @@ const authUser = async (req, res) => {
                         last_login: currentDate.toISOString()
                     }, {new: true})
                     const name = user.name
+                    console.log('r')
                     const token = await jwt.sign({name}, 'jwt-secret-key', {expiresIn: '1d'})
                     res.cookie('token', token)
                     return res.json({Status: "Success", user: updateUser, token: token})

@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {AJAX} from "../commonFunctions/AJAX/AJAX.js";
-import {LOGOUT} from "../commonFunctions/constants.js";
+import {LOGOUT, VERIFY} from "../commonFunctions/constants.js";
 
 export const useData = () => {
     const [auth, setAuth] = useState(false)
@@ -10,16 +10,18 @@ export const useData = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/users/verify')
-            .then(res => {
-                if (res.data.Status === 'Success') {
-                    setAuth(true)
-                    setName(res.data.name)
-                } else {
-                    navigate('/login')
-                    setAuth(false)
-                }
-            })
+        AJAX({
+            method: 'get',
+            url: VERIFY
+        }).then(res => {
+            if (res.data.Status === 'Success') {
+                setAuth(true)
+                setName(res.data.name)
+            } else {
+                navigate('/login')
+                setAuth(false)
+            }
+        })
             .then(err => console.log(err))
     }, []);
     const handleLogout = () => {

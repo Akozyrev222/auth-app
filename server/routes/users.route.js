@@ -4,8 +4,6 @@ const {
     getUsers,
     createUser,
     authUser,
-    updateUser,
-    updateUsers,
     blockUsers,
     unblockUsers, deleteUsers
 } = require("../contollers/user.controller");

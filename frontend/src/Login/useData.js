@@ -29,23 +29,23 @@ export const useData = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        const res = AJAX({
+        AJAX({
                 url: `${LOGIN}`,
                 method: "post",
                 data: values,
             }
-        )
-        res.then(res => {
+        ).then(res => {
             if (res.data.Error) {
                 setModal({visible: true, message: res.data.Error, header: 'Error', success: false})
             } else {
-                navigate('/')
+                console.log(res)
                 setModal({
                     visible: false,
                     message: '',
                     header: '',
                     success: true
                 })
+                navigate('/')
             }
         })
     }

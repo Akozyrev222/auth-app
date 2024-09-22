@@ -24,10 +24,10 @@ mongoose.connect(MONGO_URI)
         console.error('Error connecting to MongoDB:', error);
     });
 
-app.get("/", (req, res) => {
+/*app.get("/", (req, res) => {
     res.json("Hello");
-})
-/*app.use('/', userRoute)*/
+})*/
+app.use('/', userRoute)
 
 app.listen(3000, () => {
     console.log("Start")

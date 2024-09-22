@@ -152,6 +152,7 @@ const verifyUser = (req, res, next) => {
             }
         })
     }
+    return res.json({token: token})
 }
 module.exports = {
     authUser,

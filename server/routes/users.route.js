@@ -4,10 +4,9 @@ const {
     createUser,
     authUser,
     blockUsers,
-    unblockUsers, deleteUsers
+    unblockUsers, deleteUsers, verifyUser
 } = require("../contollers/user.controller");
 const router = express.Router()
-const verifyUser = require('../middlewares/verify.midleware')
 router.get('/api/users/logout', (req, res) => {
     res.clearCookie('token')
     return res.json({Status: 'Success'})

@@ -7,7 +7,8 @@ const UserSchema = mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        index: {unique: true}
     },
     password: {
         type: String,
@@ -18,10 +19,13 @@ const UserSchema = mongoose.Schema({
         required: true
     },
     disable: {
-        type: String,
-        required: true
+        type: Boolean,
     }
-})
+}).set('toJSON', {
+    virtuals: true,
+    versionKey:false,
+    transform: function (doc, ret) {   delete ret._id  }
+});
 const User = mongoose.model("User", UserSchema);
 
 module.exports = User

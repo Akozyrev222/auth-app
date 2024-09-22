@@ -7,12 +7,13 @@ const userRoute = require('./routes/users.route')
 
 const app = express()
 app.use(express.json());
+app.use(cookieParser());
+
 app.use(cors({
     origin: ["https://auth-front-wheat.vercel.app"],
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true
 }));
-app.use(cookieParser());
 
 const MONGO_URI = 'mongodb+srv://root:NHRRa1Z3RcdxNUbV@auth.qld6y.mongodb.net/Users?retryWrites=true&w=majority&appName=Auth';
 

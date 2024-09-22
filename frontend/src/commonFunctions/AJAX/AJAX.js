@@ -14,6 +14,5 @@ export const AJAX = (params) => {
         headers: headers,
         method: method,
         data: data,
-        withCredentials: true
     });
 }

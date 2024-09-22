@@ -12,7 +12,7 @@ export const useData = () => {
 
     useEffect(() => {
         setAuth(true)
-            /*AJAX({method: 'get', url: VERIFY})
+            AJAX({method: 'get', url: VERIFY})
                 .then(res => {
                     if (res.data.Status === 'Success') {
                         setAuth(true)
@@ -22,7 +22,7 @@ export const useData = () => {
                         setAuth(false)
                     }
                 })
-                .then(err => console.log(err))*/
+                .then(err => console.log(err))
     }, []);
     const handleLogout = () => {
         AJAX({

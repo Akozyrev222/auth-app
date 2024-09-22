@@ -11,6 +11,8 @@ export const useData = () => {
 
 
     useEffect(() => {
+        const token = Cookies.get('token')
+        console.log(token)
             AJAX({method: 'get', url: VERIFY})
                 .then(res => {
                     console.log(res)

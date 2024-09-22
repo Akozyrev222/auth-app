@@ -3,7 +3,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const userRoute = require('./routes/users.route')
-const db = require('./db')
 
 
 const app = express()
@@ -14,6 +13,16 @@ app.use(cors({
     credentials: true
 }));
 app.use(cookieParser());
+
+const MONGO_URI = 'mongodb+srv://root:NHRRa1Z3RcdxNUbV@auth.qld6y.mongodb.net/Users?retryWrites=true&w=majority&appName=Auth';
+
+mongoose.connect(MONGO_URI)
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch((error) => {
+        console.error('Error connecting to MongoDB:', error);
+    });
 
 
 app.use('/', userRoute)

@@ -1,5 +1,5 @@
 export const BASE_URL = 'http://localhost:3000/'
-export const BASE_API = 'api/users/'
+export const BASE_API = 'server/users/'
 
 export const REGISTER = 'register'
 export const LOGIN = 'login'

@@ -58,7 +58,7 @@ const authUser = async (req, res) => {
                     const name = user.name
                     const token = await jwt.sign({name}, 'jwt-secret-key', {expiresIn: '1d'})
                     res.cookie('token', token)
-                    return res.json({Status: "Success", user: updateUser})
+                    return res.json({Status: "Success", user: updateUser, token: token})
                 } else {
                     return res.json({Error: 'Password not matched'})
                 }

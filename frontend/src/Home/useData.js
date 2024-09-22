@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 
 export const useData = () => {
     const [auth, setAuth] = useState(false)
-    const [name, setName] = useState('')
+    const [name, setName] = useState('111')
     const navigate = useNavigate()
 
 

@@ -8,6 +8,8 @@ export const useData = () => {
     const [auth, setAuth] = useState(false)
     const [name, setName] = useState('')
     const navigate = useNavigate()
+    axios.defaults.withCredentials = true;
+
 
     useEffect(() => {
         axios.get('https://auth-app-virid-eight.vercel.app/api/users/verify')

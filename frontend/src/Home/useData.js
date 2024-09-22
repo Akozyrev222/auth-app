@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
+import axios, {get} from "axios";
 import {AJAX} from "../commonFunctions/AJAX/AJAX.js";
-import {LOGOUT} from "../commonFunctions/constants.js";
+import {LOGOUT, VERIFY} from "../commonFunctions/constants.js";
 
 export const useData = () => {
     const [auth, setAuth] = useState(false)
@@ -12,7 +12,7 @@ export const useData = () => {
 
 
     useEffect(() => {
-        axios.get('https://auth-app-virid-eight.vercel.app/api/users/verify')
+        AJAX({method: 'get', url: VERIFY})
             .then(res => {
                 if (res.data.Status === 'Success') {
                     setAuth(true)

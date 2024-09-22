@@ -11,6 +11,7 @@ export const useData = () => {
 
 
     useEffect(() => {
+        console.log('here')
             AJAX({method: 'get', url: VERIFY})
                 .then(res => {
                     if (res.data.Status === 'Success') {

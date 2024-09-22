@@ -38,14 +38,14 @@ export const useData = () => {
             if (res.data.Error) {
                 setModal({visible: true, message: res.data.Error, header: 'Error', success: false})
             } else {
-                console.log(res)
                 setModal({
                     visible: false,
                     message: '',
                     header: '',
                     success: true
                 })
-                navigate('/')
+                setTimeout(() => navigate('/'), 5000)
+
             }
         })
     }

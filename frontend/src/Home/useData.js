@@ -8,13 +8,11 @@ export const useData = () => {
     const [auth, setAuth] = useState(false)
     const [name, setName] = useState('')
     const navigate = useNavigate()
-    axios.defaults.withCredentials = true;
 
 
     useEffect(() => {
         AJAX({method: 'get', url: VERIFY})
             .then(res => {
-                console.log(res)
                 if (res.data.Status === 'Success') {
                     setAuth(true)
                     setName(res.data.name)

@@ -9,5 +9,11 @@ export const AJAX = (params) => {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
     }
-    return axios({url: `${BASE_URL_PROD}${BASE_API}${url}`, headers: headers, method: method, data: data});
+    return axios({
+        url: `${BASE_URL_PROD}${BASE_API}${url}`,
+        headers: headers,
+        method: method,
+        data: data,
+        withCredentials: true
+    });
 }

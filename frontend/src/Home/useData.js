@@ -11,11 +11,9 @@ export const useData = () => {
 
 
     useEffect(() => {
-        const token = Cookies.get('token')
-        console.log(token)
-            AJAX({method: 'get', url: VERIFY})
+        setAuth(true)
+            /*AJAX({method: 'get', url: VERIFY})
                 .then(res => {
-                    console.log(res)
                     if (res.data.Status === 'Success') {
                         setAuth(true)
                         setName(res.data.name)
@@ -24,7 +22,7 @@ export const useData = () => {
                         setAuth(false)
                     }
                 })
-                .then(err => console.log(err))
+                .then(err => console.log(err))*/
     }, []);
     const handleLogout = () => {
         AJAX({

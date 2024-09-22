@@ -56,9 +56,8 @@ const authUser = async (req, res) => {
                         last_login: currentDate.toISOString()
                     }, {new: true})
                     const name = user.name
-                    console.log('r')
                     const token = await jwt.sign({name}, 'jwt-secret-key', {expiresIn: '1d'})
-                    res.cookie('token', token)
+                    res.cookie('token', token, {sameSite: 'none', secure: true})
                     return res.json({Status: "Success", user: updateUser, token: token})
                 } else {
                     return res.json({Error: 'Password not matched'})
@@ -86,7 +85,7 @@ const blockUsers = async (req, res) => {
             {
                 $set: {disable: true}
 
-            },{new: true})
+            }, {new: true})
         console.log(updatedUsers)
         if (updatedUsers) {
             return res.json({Status: "Success", user: updatedUsers})
@@ -110,7 +109,7 @@ const unblockUsers = async (req, res) => {
             {
                 $set: {disable: false}
 
-            },{new: true})
+            }, {new: true})
         if (updatedUsers) {
             return res.json({Status: "Success", user: updatedUsers})
         } else {
@@ -124,12 +123,12 @@ const deleteUsers = async (req, res) => {
     try {
         const usersId = req.body
         const updatedUsers = await User.deleteMany({
-                _id:
-                    {
-                        $in:
-                        usersId
-                    }
-            },{new: true})
+            _id:
+                {
+                    $in:
+                    usersId
+                }
+        }, {new: true})
         if (updatedUsers) {
             return res.json({Status: "Success", user: updatedUsers})
         } else {

@@ -6,7 +6,8 @@ export const AJAX = (params) => {
     const headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
     }
     return axios({
         url: `${BASE_URL_PROD}${BASE_API}${url}`,

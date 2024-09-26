@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: ["https://auth-front-wheat.vercel.app"],
+    origin: ["*"],
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true
 }));

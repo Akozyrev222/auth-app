@@ -8,12 +8,10 @@ const {
 } = require("../contollers/user.controller");
 const router = express.Router()
 router.get('/api/users/logout', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     res.clearCookie('token')
     return res.json({Status: 'Success'})
 })
 router.get('/api/users/verify', verifyUser, (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     return res.json({Status: 'Success', name: req.name})
 })
 router.post('/api/users/register', createUser)

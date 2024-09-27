@@ -5,7 +5,6 @@ const moment = require("moment")
 
 const salt = 10
 const getUsers = async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     try {
         const users = await User.find({});
         res.status(200).json(users)
@@ -14,7 +13,6 @@ const getUsers = async (req, res) => {
     }
 }
 const createUser = async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     try {
         if (!req.body.password) {
             res.json({Error: "Password can't be empty"})
@@ -41,7 +39,6 @@ const createUser = async (req, res) => {
     }
 }
 const authUser = async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     try {
         const user = await User.findOne(
             {
@@ -76,7 +73,6 @@ const authUser = async (req, res) => {
     }
 }
 const blockUsers = async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     try {
         const usersId = req.body
         const updatedUsers = await User.updateMany({
@@ -101,7 +97,6 @@ const blockUsers = async (req, res) => {
     }
 }
 const unblockUsers = async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     try {
         const usersId = req.body
         const updatedUsers = await User.updateMany({
@@ -125,7 +120,6 @@ const unblockUsers = async (req, res) => {
     }
 }
 const deleteUsers = async (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
     try {
         const usersId = req.body
         const updatedUsers = await User.deleteMany({
@@ -145,7 +139,6 @@ const deleteUsers = async (req, res) => {
     }
 }
 const verifyUser = (req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
     const token = req.cookies.token;
     if (!token) {
         return res.json({Error: 'You are not authenticated'})

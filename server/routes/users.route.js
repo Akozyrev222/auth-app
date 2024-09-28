@@ -6,19 +6,20 @@ const {
     blockUsers,
     unblockUsers, deleteUsers, verifyUser
 } = require("../contollers/user.controller");
+const {
+    validateUser
+} = require("../middlewares/validate.midleware");
 const router = express.Router()
 router.get('/api/users/logout', (req, res) => {
     res.clearCookie('token')
     return res.json({Status: 'Success'})
 })
-router.get('/api/users/verify', verifyUser, (req, res) => {
-    return res.json({Status: 'Success', name: req.name})
-})
+router.get('/api/users/verify', verifyUser)
 router.post('/api/users/register', createUser)
-router.put('/api/users/block', verifyUser, blockUsers)
-router.put('/api/users/unblock', verifyUser, unblockUsers)
-router.delete('/api/users/delete', verifyUser, deleteUsers)
-router.get('/api/users/', getUsers)
+router.put('/api/users/block', validateUser, blockUsers)
+router.put('/api/users/unblock', validateUser, unblockUsers)
+router.delete('/api/users/delete', validateUser, deleteUsers)
+router.get('/api/users/', validateUser, getUsers)
 router.post('/api/users/login', authUser)
 
 module.exports = router;

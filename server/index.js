@@ -3,6 +3,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const userRoute = require('./routes/users.route')
+const {verifyUser} = require("./contollers/user.controller");
 
 
 const app = express()
@@ -24,10 +25,6 @@ mongoose.connect(MONGO_URI)
     .catch((error) => {
         console.error('Error connecting to MongoDB:', error);
     });
-
-/*app.get("/", (req, res) => {
-    res.json("Hello");
-})*/
 app.use('/', userRoute)
 
 app.listen(3000, () => {

@@ -7,12 +7,22 @@ export const useData = () => {
     const [users, setUsers] = useState([])
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [loading, setLoading] = useState(false)
+    const handleLogout = () => {
+        AJAX({
+            method: 'get',
+            url: LOGOUT
+        })
+            .then(res => {
+                location.reload(true)
+            }).catch((err) => console.log(err))
+    }
     const fetchUsers = () => {
         AJAX({
             url: '',
             method: 'get',
         }).then(res => {
-            setUsers(res.data)
+            res.data.Status === 'Success' ?
+                setUsers(res.data.users) : handleLogout()
         })
             .then(err => console.log(err))
     }
@@ -29,23 +39,27 @@ export const useData = () => {
         })
     }, [users])
 
-    const handleBlock = () => {
+    const handleBlock = async () => {
         setLoading(true)
-        AJAX({
+        const response = await AJAX({
             method: 'put',
             url: BLOCK,
-            data: JSON.stringify(selectedRowKeys)
-        }).then(res => {
+            data: {blockedUsersId: selectedRowKeys}
+        })
+        response.data.Status === 'Success' ? fetchUsers() : handleLogout()
+        setLoading(false)
+        /*.then(res => {
             res.data.Status === 'Success' ? fetchUsers() : console.log(res.data.Error)
             setLoading(false)
-        }).catch((err) => console.log(err))
+            res.data.Status === 'Error'?
+        }).catch((err) => console.log(err))*/
     }
     const handleUnblock = () => {
         setLoading(true)
         AJAX({
             method: 'put',
             url: UNBLOCK,
-            data: JSON.stringify(selectedRowKeys)
+            data: {unblockedUsersId: selectedRowKeys}
         }).then(res => {
             res.data.Status === 'Success' ? fetchUsers() : console.log(res.data.Error)
             setLoading(false)
@@ -57,7 +71,7 @@ export const useData = () => {
         AJAX({
             method: 'delete',
             url: DELETE,
-            data: JSON.stringify(selectedRowKeys)
+            data: {deleteUsersId: selectedRowKeys}
         }).then(res => {
             res.data.Status === 'Success' ? fetchUsers() : console.log(res.data.Error)
             setLoading(false)

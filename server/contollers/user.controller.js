@@ -7,7 +7,10 @@ const salt = 10
 const getUsers = async (req, res) => {
     try {
         const users = await User.find({});
-        res.status(200).json(users)
+        res.status(200).json({
+            Status: 'Success',
+            users: users
+        })
     } catch (error) {
         res.status(500).json({message: error.message})
     }
@@ -27,7 +30,6 @@ const createUser = async (req, res) => {
                     disable: false
                 }
             )
-            console.log(user)
             res.json({Status: "Success", user})
         }
     } catch (error) {
@@ -55,8 +57,8 @@ const authUser = async (req, res) => {
                     const updateUser = await User.findByIdAndUpdate(user.id, {
                         last_login: currentDate.toISOString()
                     }, {new: true})
-                    const name = user.name
-                    const token = await jwt.sign({name}, 'jwt-secret-key', {expiresIn: '1d'})
+                    const email = user.email
+                    const token = await jwt.sign({email}, 'jwt-secret-key', {expiresIn: '1d'})
                     res.cookie('token', token, {sameSite: 'none', secure: true})
                     return res.json({Status: "Success", user: updateUser, token: token})
                 } else {
@@ -74,7 +76,7 @@ const authUser = async (req, res) => {
 }
 const blockUsers = async (req, res) => {
     try {
-        const usersId = req.body
+        const usersId = req.body.blockedUsersId
         const updatedUsers = await User.updateMany({
                 _id:
                     {
@@ -86,19 +88,20 @@ const blockUsers = async (req, res) => {
                 $set: {disable: true}
 
             }, {new: true})
-        console.log(updatedUsers)
         if (updatedUsers) {
-            return res.json({Status: "Success", user: updatedUsers})
+            console.log(updatedUsers)
+            return res.json({Status: "Success"})
         } else {
             return res.json({Error: 'Users not updated'})
         }
     } catch (error) {
-        return res.json({Error: error.message})
+        console.log(error, 'errrrrorrrr')
+        res.status(500).json({message: error.message})
     }
 }
 const unblockUsers = async (req, res) => {
     try {
-        const usersId = req.body
+        const usersId = req.body.unblockedUsersId
         const updatedUsers = await User.updateMany({
                 _id:
                     {
@@ -111,7 +114,7 @@ const unblockUsers = async (req, res) => {
 
             }, {new: true})
         if (updatedUsers) {
-            return res.json({Status: "Success", user: updatedUsers})
+            return res.json({Status: "Success"})
         } else {
             return res.json({Error: 'Users not updated'})
         }
@@ -121,7 +124,7 @@ const unblockUsers = async (req, res) => {
 }
 const deleteUsers = async (req, res) => {
     try {
-        const usersId = req.body
+        const usersId = req.body.deleteUsersId
         const updatedUsers = await User.deleteMany({
             _id:
                 {
@@ -138,21 +141,25 @@ const deleteUsers = async (req, res) => {
         return res.json({Error: error.message})
     }
 }
-const verifyUser = (req, res, next) => {
+const verifyUser = (req, res) => {
     const token = req.cookies.token;
     if (!token) {
         return res.json({Error: 'You are not authenticated'})
     } else {
-        jwt.verify(token, 'jwt-secret-key', (err, decoded) => {
+        jwt.verify(token, 'jwt-secret-key', async (err, decoded) => {
             if (err) {
                 return res.json({Error: 'Token is not matched'})
             } else {
-                req.name = decoded.name
-                next()
+                req.email = decoded.email
+                const user = await User.findOne({email: decoded.email})
+                if (user && !user.disable) {
+                    return res.json({token: token})
+                } else {
+                    return res.json({Error: 'You user blocked or logout'})
+                }
             }
         })
     }
-    return res.json({token: token})
 }
 module.exports = {
     authUser,

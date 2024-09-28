@@ -3,7 +3,7 @@ import {useData} from "./useData.js";
 import {Spin, Table} from "antd";
 import {DeleteOutlined, LockOutlined, UnlockOutlined} from "@ant-design/icons";
 
-const Home = () => {
+const UserTable = () => {
     const {
         users,
         handleDelete,
@@ -58,4 +58,4 @@ const Home = () => {
         </div>
     )
 }
-export default Home
+export default UserTable

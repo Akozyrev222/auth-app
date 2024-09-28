@@ -44,7 +44,7 @@ export const useData = () => {
                     header: '',
                     success: true
                 })
-                setTimeout(() => navigate('/'), 5000)
+                navigate('/')
 
             }
         })

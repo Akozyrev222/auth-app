@@ -6,17 +6,18 @@ import Cookies from 'js-cookie';
 
 export const useData = () => {
     const [auth, setAuth] = useState(false)
-    const [name, setName] = useState('111')
+    const [name, setName] = useState('')
     const navigate = useNavigate()
 
 
     useEffect(() => {
-        setAuth(true)
             AJAX({method: 'get', url: VERIFY})
                 .then(res => {
-                    if (res.data.Status === 'Success') {
+                    console.log(res, '')
+                    if (res.data.token) {
                         setAuth(true)
                         setName(res.data.name)
+                        navigate('/')
                     } else {
                         navigate('/login')
                         setAuth(false)

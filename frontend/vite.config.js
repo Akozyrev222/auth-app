@@ -6,7 +6,7 @@ export default defineConfig({
     server: {
         proxy: {
             //'/api': 'http://localhost:3000'
-            '/api': 'https://auth-app-d28u.onrender.com'
+            '/api': 'https://auth-app-virid-eight.vercel.app/'
         }
     },
     plugins: [react()],

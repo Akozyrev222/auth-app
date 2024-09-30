@@ -12,6 +12,7 @@ export const useData = () => {
     useEffect(() => {
         AJAX({method: 'get', url: VERIFY})
             .then(res => {
+                console.log(res.data.user)
                 if (res.data.user) {
                     setAuth(true)
                     setName(res.data.user)

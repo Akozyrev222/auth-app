@@ -10,7 +10,7 @@ const {
     validateUser
 } = require("../middlewares/validate.midleware");
 const router = express.Router()
-router.get('/api/users/logout', (req, res) => {
+router.get('/api/users/logout', validateUser,(req, res) => {
     res.clearCookie('token')
     return res.json({Status: 'Success'})
 })

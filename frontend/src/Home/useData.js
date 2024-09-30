@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {AJAX} from "../commonFunctions/AJAX/AJAX.js";
 import {LOGOUT, VERIFY} from "../commonFunctions/constants.js";
-import Cookies from 'js-cookie';
 
 export const useData = () => {
     const [auth, setAuth] = useState(false)
@@ -11,19 +10,18 @@ export const useData = () => {
 
 
     useEffect(() => {
-            AJAX({method: 'get', url: VERIFY})
-                .then(res => {
-                    console.log(res, '')
-                    if (res.data.token) {
-                        setAuth(true)
-                        setName(res.data.name)
-                        navigate('/')
-                    } else {
-                        navigate('/login')
-                        setAuth(false)
-                    }
-                })
-                .then(err => console.log(err))
+        AJAX({method: 'get', url: VERIFY})
+            .then(res => {
+                if (res.data.user) {
+                    setAuth(true)
+                    setName(res.data.user)
+                    navigate('/')
+                } else {
+                    navigate('/login')
+                    setAuth(false)
+                }
+            })
+            .then(err => console.log(err))
     }, []);
     const handleLogout = () => {
         AJAX({

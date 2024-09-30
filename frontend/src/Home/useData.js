@@ -12,10 +12,9 @@ export const useData = () => {
     useEffect(() => {
         AJAX({method: 'get', url: VERIFY})
             .then(res => {
-                console.log(res.data.user)
-                if (res.data.user) {
+                if (res.data.token) {
                     setAuth(true)
-                    setName(res.data.user)
+                    setName(res.data.name)
                     navigate('/')
                 } else {
                     navigate('/login')

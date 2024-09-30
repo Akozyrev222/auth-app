@@ -153,7 +153,7 @@ const verifyUser = (req, res) => {
                 req.email = decoded.email
                 const user = await User.findOne({email: decoded.email})
                 if (user && !user.disable) {
-                    return res.json({user: user.name})
+                    return res.json({token: token})
                 } else {
                     return res.json({Error: 'You user blocked or logout'})
                 }

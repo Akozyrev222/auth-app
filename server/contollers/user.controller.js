@@ -40,6 +40,27 @@ const createUser = async (req, res) => {
         }
     }
 }
+const updateLastLogin = async (user) => {
+    const currentDate = new Date()
+    const updateUser = await User.findByIdAndUpdate(user.id, {
+        last_login: currentDate.toISOString()
+    }, {new: true})
+    return updateUser
+}
+const passwordCheck = (req, res, user) => {
+    bcrypt.compare(req.body.password.toString(), user.password, async (err, response) => {
+        if (err) return res.json({Error: "Password compare error"})
+        if (response) {
+            const updateUser = updateLastLogin(user)
+            const email = user.email
+            const token = await jwt.sign({email}, 'jwt-secret-key', {expiresIn: '1d'})
+            res.cookie('token', token, {sameSite: 'none', secure: true})
+            return res.json({Status: "Success", user: updateUser, token: token})
+        } else {
+            return res.json({Error: 'Password not matched'})
+        }
+    })
+}
 const authUser = async (req, res) => {
     try {
         const user = await User.findOne(
@@ -50,21 +71,7 @@ const authUser = async (req, res) => {
         if (!user) {
             return res.json({Error: 'No such user'})
         } else if (user && !user.disable) {
-            bcrypt.compare(req.body.password.toString(), user.password, async (err, response) => {
-                if (err) return res.json({Error: "Password compare error"})
-                if (response) {
-                    const currentDate = new Date()
-                    const updateUser = await User.findByIdAndUpdate(user.id, {
-                        last_login: currentDate.toISOString()
-                    }, {new: true})
-                    const email = user.email
-                    const token = await jwt.sign({email}, 'jwt-secret-key', {expiresIn: '1d'})
-                    res.cookie('token', token, {sameSite: 'none', secure: true})
-                    return res.json({Status: "Success", user: updateUser, token: token})
-                } else {
-                    return res.json({Error: 'Password not matched'})
-                }
-            })
+            passwordCheck(req, res, user)
         } else if (user.disable) {
             return res.json({Error: 'Your user disable'})
         } else {
@@ -89,13 +96,11 @@ const blockUsers = async (req, res) => {
 
             }, {new: true})
         if (updatedUsers) {
-            console.log(updatedUsers)
             return res.json({Status: "Success"})
         } else {
             return res.json({Error: 'Users not updated'})
         }
     } catch (error) {
-        console.log(error, 'errrrrorrrr')
         res.status(500).json({message: error.message})
     }
 }

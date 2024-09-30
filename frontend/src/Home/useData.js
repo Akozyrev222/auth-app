@@ -29,6 +29,7 @@ export const useData = () => {
             url: LOGOUT
         })
             .then(res => {
+                navigate('/login')
                 location.reload(true)
             }).catch((err) => console.log(err))
     }
